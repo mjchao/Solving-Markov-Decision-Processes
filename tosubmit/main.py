@@ -129,9 +129,9 @@ def problem3():
     f.close()
     print "Finished Solving Problem 3"
 
-#problem1()
-#problem2()
-#problem3()
-problem2_graph()
+problem1()
+problem2()
+problem3()
+#problem2_graph()
 #problem2_mean_stddev()
 print
