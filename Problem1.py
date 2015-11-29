@@ -209,7 +209,9 @@ def get_optimal_policy( costOfLiving ):
     utilMap = apply_value_iteration( utilMap , transitionModel, rewardSet )
     return utilMap.get_optimal_policy( transitionModel )
 
+counter = 0
 def search( low , high ):
+    global counter
     if ( get_optimal_policy( low ) == get_optimal_policy( high ) ):
         return []
 
@@ -222,7 +224,9 @@ def search( low , high ):
     
     if ( midPolicy != get_optimal_policy( mid+0.0001 ) or \
          midPolicy != get_optimal_policy( mid-0.0001 ) ):
+        counter += 1
         rtn.append( mid )
+        print "Found", counter, "values so far."
         
     if ( lowPolicy != midPolicy ):    
         rtn.extend( search( low , mid-0.0001 ) )
@@ -231,7 +235,12 @@ def search( low , high ):
         rtn.extend( search( mid+0.0001, high ) )
         
     return rtn
-                    
+
+def solve():
+    counter = 0
+    answers = search( -2.0 , 0.0 )
+    answers.reverse()
+    return answers                 
         
 def main():
     print get_optimal_policy( -0.029 )

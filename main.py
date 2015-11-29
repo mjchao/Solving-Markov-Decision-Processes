@@ -8,14 +8,13 @@ import Problem1
 
 def problem1():
     print "Solving Problem 1"
-    answers = Problem1.search( -2.0 , 0.0 )
-    answers.reverse()
+    answers = Problem1.solve()
     f = open( "generated/P1-output.txt" , "w" )
-    f.write( "0\n\n" )
+    f.write( "0.0000\n\n" )
     prevPolicyStr = str(Problem1.get_optimal_policy( 0 ))
     f.write( prevPolicyStr + "\n" )
     for i in range(0,8):
-        f.write( str(answers[ i ]) + "\n\n" )
+        f.write( str('{0:.4f}'.format(answers[ i ])) + "\n\n" )
         nextPolicyStr = str(Problem1.get_optimal_policy( answers[ i ] - 0.0001 ))
         output = ""
         for i in range(len(nextPolicyStr)):
