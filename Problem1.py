@@ -136,9 +136,13 @@ class UtilityMap( object ):
         
     def __str__( self ):
         rtn = ""
+        utilities = [['0' for _ in range(0,4)] for _ in range(0,3)]
+        for i in range(0,3):
+            for j in range(0,4):
+                utilities[ i ][ j ] = '{0:.3f}'.format( self._utilities[ i ][ j ] ) 
         for i in range(0, 3):
-            rtn += str( self._utilities[ i ][ 0 ] ) + " " + str( 'X' if i == 1 else self._utilities[ i ][ 1 ] ) + " " + \
-                 str( self._utilities[ i ][ 2 ] ) + " " + str( self._utilities[ i ][ 3 ] ) + "\n"
+            rtn += str( utilities[ i ][ 0 ] ) + " " + str( '0.000' if i == 1 else utilities[ i ][ 1 ] ) + " " + \
+                 str( utilities[ i ][ 2 ] ) + " " + str( utilities[ i ][ 3 ] ) + "\n"
         return rtn
     
     def get_optimal_policy( self , transitionModel ):

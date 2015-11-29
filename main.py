@@ -4,7 +4,7 @@ Created on Nov 28, 2015
 @author: mjchao
 '''
 
-import Problem1
+import Problem1, Problem2
 
 def problem1():
     print "Solving Problem 1"
@@ -29,4 +29,31 @@ def problem1():
     f.close()
     print "Finished Solving Problem 1"
     
-problem1()
+def problem2():
+    print "Solving Problem 2"
+    answers = Problem2.solve()
+    
+    utilMap = answers[ 0 ] 
+    with open( "generated/P2-output.txt" , 'w' ) as f:
+        f.write( str(utilMap) + "\n" )
+        
+    distribution10 = answers[ 1 ]
+    with open( "generated/P2-data-10.txt" , 'w' ) as f:
+        for i in range(0, len(distribution10) ):
+            f.write( str(distribution10[ i ]) + "\n" )
+            
+    distribution100 = answers[ 2 ]
+    with open( "generated/P2-data-100.txt" , 'w' ) as f:
+        for i in range(0, len(distribution100) ):
+            f.write( str(distribution100[ i ]) + "\n" )
+            
+    distribution1000 = answers[ 3 ]
+    with open( "generated/P3-data-1000.txt" , 'w' ) as f:
+        for i in range(0, len(distribution1000) ):
+            f.write( str(distribution1000[ i ]) + "\n" )
+            
+    print "Finished Solving Problem 2"
+
+#problem1()
+problem2()
+print
