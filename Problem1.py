@@ -116,6 +116,12 @@ class Policy( object ):
             rtn += str( self._actions[ i ][ 0 ] ) + " " + str( self._actions[ i ][ 1 ] ) + " " + \
                     str( self._actions[ i ][ 2 ] ) + " " + str( self._actions[ i ][ 3 ] ) + "\n"
         return rtn
+    
+    def __eq__( self , other ):
+        return str(self) == str(other)
+    
+    def __ne__( self , other ):
+        return str(self) != str(other)
 '''
 Note: Because the assignment uses he environment shown in
 Figure 17.1 of Artificial Intelligence: A Modern Approach,
@@ -182,8 +188,6 @@ def apply_value_iteration( utilMap , transitionModel , rewardSet , discountFacto
                 payoffs = [ northPayoff, southPayoff , eastPayoff , westPayoff ]
                 nextUtils._utilities[ row ][ col ] = rewardSet.get_reward( row , col ) + discountFactor*max( payoffs )
         
-        print nextUtils
-        
         #test for convergence
         maxChange = 0
         for row in range(0,3):
@@ -197,12 +201,47 @@ def apply_value_iteration( utilMap , transitionModel , rewardSet , discountFacto
         
         currUtils = nextUtils
     return currUtils
+
+def get_optimal_policy( costOfLiving ):
+    utilMap = UtilityMap()
+    transitionModel = TransitionModel()
+    rewardSet = RewardSet( costOfLiving )
+    utilMap = apply_value_iteration( utilMap , transitionModel, rewardSet )
+    return utilMap.get_optimal_policy( transitionModel )
+
+def search( low , high ):
+    if ( get_optimal_policy( low ) == get_optimal_policy( high ) ):
+        return []
+
+    rtn = []
+    mid = (low+high)/2
+    
+    lowPolicy = get_optimal_policy( low )
+    midPolicy = get_optimal_policy( mid )
+    highPolicy = get_optimal_policy( high )
+    
+    if ( midPolicy != get_optimal_policy( mid+0.0001 ) or \
+         midPolicy != get_optimal_policy( mid-0.0001 ) ):
+        rtn.append( mid )
+        
+    if ( lowPolicy != midPolicy ):    
+        rtn.extend( search( low , mid-0.0001 ) )
+        
+    if ( midPolicy != highPolicy ):
+        rtn.extend( search( mid+0.0001, high ) )
+        
+    return rtn
                     
         
 def main():
-    utilMap = UtilityMap()
-    utilMap = apply_value_iteration( utilMap , TransitionModel() , RewardSet( -0.04 ) )
-    print utilMap
-    print utilMap.get_optimal_policy( TransitionModel() )
+    print get_optimal_policy( -0.029 )
+    '''
+    p1Answers = search( -10.0 , 0.0 )
+    for i in range( len(p1Answers) ):
+        p1Answers[ i ] = '{0:.4f}'.format( p1Answers[ i ] )
+
+    print p1Answers
+    '''
+    
 
 if __name__ == "__main__": main()
