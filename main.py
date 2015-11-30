@@ -107,12 +107,13 @@ def problem3():
     outputData = Problem3.get_optimal_policy_and_utility( 0.99 - 0.00001 )
     prevPolicyStr = outputData[ 0 ]
     f.write( prevPolicyStr + "\n" )
-    utilityOutput = outputData[ 1 ]
-    f.write( utilityOutput + "\n" )
     
     for i in range(0,len(answers)):
-        f.write( str('{0:.5f}'.format(answers[ i ])) + "\n\n" )
         outputData = Problem3.get_optimal_policy_and_utility( answers[ i ] - 0.00001 )
+        utilityOutput = outputData[ 1 ]
+        f.write( utilityOutput + "\n" )
+        
+        f.write( str('{0:.5f}'.format(answers[ i ])) + "\n\n" )
         nextPolicyStr = outputData[ 0 ]
         policyOutput = ""
         for i in range(len(nextPolicyStr)):
@@ -122,16 +123,18 @@ def problem3():
                 policyOutput += nextPolicyStr[ i ] + "*"
                 
         f.write( policyOutput + "\n" )
-        utilityOutput = outputData[ 1 ]
-        f.write( utilityOutput + "\n" )
         prevPolicyStr = nextPolicyStr
+        
+    outputData = Problem3.get_optimal_policy_and_utility( 0.00000 )
+    f.write( outputData[ 1 ] + "\n" )
+    f.write( "0.00000" )
         
     f.close()
     print "Finished Solving Problem 3"
 
-#problem1()
-#problem2()
-#problem3()
-problem2_graph()
+problem1()
+problem2()
+problem3()
+#problem2_graph()
 #problem2_mean_stddev()
 print
